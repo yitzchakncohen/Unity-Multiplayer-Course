@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Coin
+    uniqueID: 2409956471
+    locked: 0
   - name: Player
     uniqueID: 2968693227
     locked: 0
