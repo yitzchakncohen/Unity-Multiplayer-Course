@@ -376,6 +376,7 @@ GameObject:
   - component: {fileID: 5966316627268085578}
   - component: {fileID: 9022390398226176816}
   - component: {fileID: 3924869201552579416}
+  - component: {fileID: 2650198696117584599}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -528,6 +529,21 @@ MonoBehaviour:
   projectileSpeed: 30
   fireRate: 0.75
   muzzleFlashDuration: 0.075
+--- !u!114 &2650198696117584599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411871766596357153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b719f26033e3699429dd9b8ae67e70ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <MaxHealth>k__BackingField: 100
+  CurrentHealth:
+    m_InternalValue: 0
 --- !u!1 &6675258428389075507
 GameObject:
   m_ObjectHideFlags: 0
