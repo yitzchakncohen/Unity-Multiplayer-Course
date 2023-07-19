@@ -13,7 +13,7 @@ public class HostGameManager
     private Allocation allocation;
     private string joinCode;
     private const int MaxConnections = 20;
-    private const string UDPConnectionType = "udp";
+    private const string DTLSConnectionType = "dtls";
     private const string GameSceneName = "Game";
 
     public async Task StartHostAsync()
@@ -41,7 +41,7 @@ public class HostGameManager
 
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 
-        RelayServerData relayServerData = new RelayServerData(allocation, UDPConnectionType);
+        RelayServerData relayServerData = new RelayServerData(allocation, DTLSConnectionType);
         transport.SetRelayServerData(relayServerData);
 
         NetworkManager.Singleton.StartHost();
