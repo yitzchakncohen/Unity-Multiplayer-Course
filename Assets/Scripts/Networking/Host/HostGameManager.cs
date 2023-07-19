@@ -36,7 +36,7 @@ public class HostGameManager
         try
         {
             joinCode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
-            Debug.Log($"Joine Code: {joinCode}");
+            Debug.Log($"Join Code: {joinCode}");
         }
         catch (Exception e)
         {
@@ -56,7 +56,7 @@ public class HostGameManager
             lobbyOptions.Data = new Dictionary<string, DataObject>()
             {
                 {
-                    "JoineCode", new DataObject(
+                    "JoinCode", new DataObject(
                         visibility: DataObject.VisibilityOptions.Member,
                         value: joinCode
                     )
