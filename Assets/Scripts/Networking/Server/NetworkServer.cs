@@ -28,6 +28,8 @@ public class NetworkServer : IDisposable
         authIdToUserData[userData.userAuthId] = userData;
 
         response.Approved = true;
+        response.Position = SpawnPoint.GetRandomSpawnPosition();
+        response.Rotation = Quaternion.identity;
         response.CreatePlayerObject = true;
     }
 
