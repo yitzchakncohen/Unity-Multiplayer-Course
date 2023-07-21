@@ -59,4 +59,19 @@ public class NetworkServer : IDisposable
             networkManager.Shutdown();
         }
     }
+
+    public UserData GetUserDataByClientId(ulong clientId)
+    {
+        if(clientIdToAuth.TryGetValue(clientId, out string authId))
+        {
+            if(authIdToUserData.TryGetValue(authId, out UserData userData))
+            {
+                return userData;
+            }
+            
+            return null;
+        }
+
+        return null;
+    }
 }
