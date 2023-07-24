@@ -149,3 +149,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: {fileID: 1617692923969715232}
+  myColor: {r: 1, g: 0.5031938, b: 0, a: 1}
