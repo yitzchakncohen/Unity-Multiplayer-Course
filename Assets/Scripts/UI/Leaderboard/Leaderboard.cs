@@ -64,10 +64,8 @@ public class Leaderboard : NetworkBehaviour
         switch (changeEvent.Type)
         {
             case NetworkListEvent<LeaderboardEntityState>.EventType.Add:
-                Debug.Log("add to leaderboard event " + changeEvent.Value.PlayerName);
                 if(!entityDisplays.Any(x => x.ClientId == changeEvent.Value.ClientId))
                 {
-                    Debug.Log("add to leaderboard "  + changeEvent.Value.PlayerName);
                     LeaderboardEntityDisplay leaderboardEntity = Instantiate(leaderboardEntityPrefab, leaderboardEntityHolder);
                     leaderboardEntity.Initialize(changeEvent.Value.ClientId, changeEvent.Value.PlayerName, changeEvent.Value.Coins);
                     entityDisplays.Add(leaderboardEntity);
@@ -80,7 +78,6 @@ public class Leaderboard : NetworkBehaviour
                     displayToRemove.transform.SetParent(null);
                     Destroy(displayToRemove.gameObject);
                     entityDisplays.Remove(displayToRemove);
-                    Debug.Log("remove from leaderboard " + changeEvent.Value.PlayerName);
                 }
                 break;
             case NetworkListEvent<LeaderboardEntityState>.EventType.Value:
@@ -101,6 +98,8 @@ public class Leaderboard : NetworkBehaviour
             PlayerName = player.PlayerName.Value,
             Coins = 0
         });
+
+        player.Wallet.TotalCoins.OnValueChanged += (oldCoins, newCoins) => HandleCoinsChanged(player.OwnerClientId, newCoins);
     }
 
     private void HandlePlayerDespawned(TankPlayer player)
@@ -113,6 +112,25 @@ public class Leaderboard : NetworkBehaviour
 
             leaderboardEntities.Remove(entity);
             break;
+        }
+
+        player.Wallet.TotalCoins.OnValueChanged -= (oldCoins, newCoins) => HandleCoinsChanged(player.OwnerClientId, newCoins);
+    }
+
+    private void HandleCoinsChanged(ulong clientId, int newCoins)
+    {
+        for (int i = 0; i < leaderboardEntities.Count; i++)
+        {
+            if(leaderboardEntities[i].ClientId != clientId) { continue; }
+
+            leaderboardEntities[i] = new LeaderboardEntityState
+            {
+                ClientId = leaderboardEntities[i].ClientId,
+                PlayerName = leaderboardEntities[i].PlayerName,
+                Coins = newCoins
+            };
+
+            return;
         }
     }
 }
