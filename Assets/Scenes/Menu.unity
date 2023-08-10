@@ -636,8 +636,8 @@ RectTransform:
   - {fileID: 1986884684}
   - {fileID: 763466450}
   - {fileID: 527914093}
-  - {fileID: 1560548695}
   - {fileID: 1596523526}
+  - {fileID: 1560548695}
   - {fileID: 2039434695}
   - {fileID: 1317632204}
   m_Father: {fileID: 1206533768}
