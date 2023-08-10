@@ -18,11 +18,17 @@ public class HostGameManager : IDisposable
 {
     public NetworkServer NetworkServer { get; private set; }
     private Allocation allocation;
+    private NetworkObject playerPrefab;
     private string joinCode;
     private string lobbyId;
     private const int MaxConnections = 20;
     private const string DTLSConnectionType = "dtls";
     private const string GameSceneName = "Game";
+
+    public HostGameManager(NetworkObject playerPrefab)
+    {
+        this.playerPrefab = playerPrefab;   
+    }
 
     public async Task StartHostAsync()
     {
@@ -47,7 +53,7 @@ public class HostGameManager : IDisposable
             return;
         }
 
-        NetworkServer = new NetworkServer(NetworkManager.Singleton);
+        NetworkServer = new NetworkServer(NetworkManager.Singleton, playerPrefab);
 
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 

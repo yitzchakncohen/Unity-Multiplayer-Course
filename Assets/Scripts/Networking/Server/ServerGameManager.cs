@@ -7,20 +7,21 @@ using UnityEngine.SceneManagement;
 
 public class ServerGameManager : IDisposable
 {
+    private NetworkObject playerPrefab;
     private string serverIP;
     private int serverPort;
     private int queryPort;
     private MatchplayBackfiller backfiller;
     private MultiplayAllocationService multiplayAllocationService;
-    private const string GameSceneName = "Game";
     public NetworkServer NetworkServer { get; private set; }
 
-    public ServerGameManager(string serverIP, int serverPort, int queryPort, NetworkManager manager)
+    public ServerGameManager(string serverIP, int serverPort, int queryPort, NetworkManager manager, NetworkObject playerPrefab)
     {
         this.serverIP = serverIP;
         this.serverPort = serverPort;
         this.queryPort = queryPort;
-        NetworkServer = new NetworkServer(manager);
+        this.playerPrefab = playerPrefab;   
+        NetworkServer = new NetworkServer(manager, playerPrefab);
         multiplayAllocationService = new MultiplayAllocationService();
     }
 
@@ -53,9 +54,6 @@ public class ServerGameManager : IDisposable
             Debug.LogWarning("NetworkServer did not start as expected");
             return;
         }
-        
-        NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
-
     }
 
 
