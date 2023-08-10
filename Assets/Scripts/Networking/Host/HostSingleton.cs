@@ -22,7 +22,8 @@ public class HostSingleton : MonoBehaviour
 
             if(instance == null)
             {
-                Debug.Log("No HostSingleton in the scene!");
+                // Debug.Log("No HostSingleton in the scene!");
+                return null;
             }
 
             return instance;
