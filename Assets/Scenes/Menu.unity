@@ -2683,6 +2683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lobbyItemParent: {fileID: 1682425826}
   lobbyItemPrefab: {fileID: -7856563673154549484, guid: 77caa9ba23bbe2c4484c79fa90410f3b, type: 3}
+  mainMenu: {fileID: 1206533769}
 --- !u!1 &1596523525
 GameObject:
   m_ObjectHideFlags: 0
