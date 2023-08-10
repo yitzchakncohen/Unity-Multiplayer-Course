@@ -8,6 +8,7 @@ public class ApplicationController : MonoBehaviour
     [SerializeField] private ClientSingleton clientPrefab;
     [SerializeField] private HostSingleton hostPrefab;
     [SerializeField] private ServerSingleton serverPrefab;
+    private ApplicationData appData;
 
     private async void Start() 
     {
@@ -20,6 +21,9 @@ public class ApplicationController : MonoBehaviour
     {
         if(isDedicatedServer)
         {
+            // Setup application data via constructor. 
+            appData = new ApplicationData();
+
             ServerSingleton serverSingleton = Instantiate(serverPrefab);
 
             await serverSingleton.CreateServer();
