@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
 public class Leaderboard : NetworkBehaviour
@@ -183,6 +184,12 @@ public class Leaderboard : NetworkBehaviour
     private void HandlePlayerDespawned(TankPlayer player)
     {
         if(leaderboardEntities == null) { return; }
+        
+        if(IsServer && player.OwnerClientId == OwnerClientId) 
+        {
+            Debug.Log("Player was the server");
+            return;
+        }
         
         foreach (LeaderboardEntityState entity in leaderboardEntities)
         {

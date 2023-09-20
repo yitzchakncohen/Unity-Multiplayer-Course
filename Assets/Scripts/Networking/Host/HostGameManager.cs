@@ -96,7 +96,7 @@ public class HostGameManager : IDisposable
         byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
 
         NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
-
+        
         NetworkManager.Singleton.StartHost();
 
         NetworkServer.OnClientLeft += HandleClientLeft;
