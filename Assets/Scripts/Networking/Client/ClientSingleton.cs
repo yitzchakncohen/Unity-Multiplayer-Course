@@ -17,7 +17,7 @@ public class ClientSingleton : MonoBehaviour
                 return instance;
             }
 
-            instance = FindObjectOfType<ClientSingleton>();
+            instance = FindAnyObjectByType<ClientSingleton>();
 
             if(instance == null)
             {

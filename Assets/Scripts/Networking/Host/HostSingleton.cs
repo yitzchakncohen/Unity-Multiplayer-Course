@@ -18,7 +18,7 @@ public class HostSingleton : MonoBehaviour
                 return instance;
             }
 
-            instance = FindObjectOfType<HostSingleton>();
+            instance = FindAnyObjectByType<HostSingleton>();
 
             if(instance == null)
             {

@@ -16,7 +16,7 @@ public class CoinSpawner : NetworkBehaviour
     [SerializeField] private LayerMask layerMask;
 
     private float coinRadius;
-    private Collider2D[] coinBuffer = new Collider2D[1];
+    private Collider2D[] coinBuffer;
 
     public override void OnNetworkSpawn()
     {
@@ -57,8 +57,8 @@ public class CoinSpawner : NetworkBehaviour
             y = Random.Range(ySpawnRange.x, ySpawnRange.y);
 
             Vector2 spawnPoint  = new Vector2(x, y);
-            int numColliders = Physics2D.OverlapCircleNonAlloc(spawnPoint, coinRadius, coinBuffer, layerMask);
-            if(numColliders == 0)
+            coinBuffer = Physics2D.OverlapCircleAll(spawnPoint, coinRadius, layerMask);
+            if(coinBuffer.Length == 0)
             {
                 return spawnPoint;
             }

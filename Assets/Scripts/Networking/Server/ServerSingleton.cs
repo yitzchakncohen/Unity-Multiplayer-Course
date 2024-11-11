@@ -19,7 +19,7 @@ public class ServerSingleton : MonoBehaviour
                 return instance;
             }
 
-            instance = FindObjectOfType<ServerSingleton>();
+            instance = FindAnyObjectByType<ServerSingleton>();
 
             if(instance == null)
             {
