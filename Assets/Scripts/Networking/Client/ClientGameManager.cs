@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.Multiplayer.Playmode;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
@@ -33,9 +34,12 @@ public class ClientGameManager : IDisposable
 
         if(authState == AuthState.Authenticated)
         {
+            string playerName;
+            playerName = PlayerPrefs.GetString(NameSelector.PlayerNameKey + NameSelector.PlayModeTag, "Missing Name");
+
             UserData = new UserData
             {
-                userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name"),
+                userName = playerName,
                 userAuthId = AuthenticationService.Instance.PlayerId
 
             };

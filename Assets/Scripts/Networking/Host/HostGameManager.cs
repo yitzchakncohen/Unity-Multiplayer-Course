@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.Multiplayer.Playmode;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
@@ -60,6 +61,9 @@ public class HostGameManager : IDisposable
         RelayServerData relayServerData = new RelayServerData(allocation, DTLSConnectionType);
         transport.SetRelayServerData(relayServerData);
 
+        string playerName;
+        playerName = PlayerPrefs.GetString(NameSelector.PlayerNameKey + NameSelector.PlayModeTag, "Unknown");
+
         try
         {
             CreateLobbyOptions lobbyOptions = new CreateLobbyOptions();
@@ -73,8 +77,6 @@ public class HostGameManager : IDisposable
                     )
                 }
             };
-
-            string playerName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Unknown");
             Lobby lobby = await Lobbies.Instance.CreateLobbyAsync($"{playerName}'s Lobby", MaxConnections, lobbyOptions);   
             lobbyId = lobby.Id;
 
@@ -88,7 +90,7 @@ public class HostGameManager : IDisposable
 
         UserData userData = new UserData
         {
-            userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name"),
+            userName = playerName,
             userAuthId = AuthenticationService.Instance.PlayerId
         };
 

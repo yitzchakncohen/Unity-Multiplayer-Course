@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Multiplayer.Playmode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+// using Unity.Multiplayer.Playmode;
 
 public class NameSelector : MonoBehaviour
 {
@@ -13,17 +15,28 @@ public class NameSelector : MonoBehaviour
     [SerializeField] private int maxNameLength = 12;
 
     public const string PlayerNameKey = "PlayerName";
+    public static string PlayModeTag { get; private set; }
 
     private void Start() 
     {
+        if(CurrentPlayer.ReadOnlyTags().Length > 0)
+        {
+            PlayModeTag = CurrentPlayer.ReadOnlyTags()[0];
+        }
+        else
+        {
+            PlayModeTag = "None";
+            Debug.LogWarning("No playmode tag set for this instance.");
+        }
+
         // Check for headless server
         if(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             return;
         }
-
-        nameField.text = PlayerPrefs.GetString(PlayerNameKey, string.Empty);
+        
+        nameField.text = PlayerPrefs.GetString(PlayerNameKey + PlayModeTag, string.Empty);
         HandleNameChanged();
     }
 
@@ -34,7 +47,7 @@ public class NameSelector : MonoBehaviour
 
     public void Connect()
     {
-        PlayerPrefs.SetString(PlayerNameKey, nameField.text);
+        PlayerPrefs.SetString(PlayerNameKey + NameSelector.PlayModeTag, nameField.text);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
