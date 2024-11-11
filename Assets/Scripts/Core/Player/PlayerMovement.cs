@@ -58,7 +58,7 @@ public class PlayerMovement : NetworkBehaviour
 
         if(!IsOwner) { return; }
 
-        rb.velocity = (Vector2)bodyTransform.up * previousMovementInput.y * movementSpeed;
+        rb.linearVelocity = (Vector2)bodyTransform.up * previousMovementInput.y * movementSpeed;
     }
 
     private void Update() 
