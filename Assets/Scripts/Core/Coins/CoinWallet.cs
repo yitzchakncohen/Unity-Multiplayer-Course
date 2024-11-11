@@ -55,7 +55,7 @@ public class CoinWallet : NetworkBehaviour
 
     private void HandleDie(Health health)
     {
-        int bountyValue = (int)(TotalCoins.Value * (bountyPercentage/100));
+        int bountyValue = (int)(TotalCoins.Value * (bountyPercentage/100f));
         int bountyCoinValue = bountyValue / bountyCoinCount;
 
         if(bountyCoinValue < minBountyCoinValue) { return; }
