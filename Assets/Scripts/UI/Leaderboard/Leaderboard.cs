@@ -27,6 +27,16 @@ public class Leaderboard : NetworkBehaviour
         leaderboardEntities = new NetworkList<LeaderboardEntityState>();
     }
 
+    private void Update() 
+    {
+        Debug.Log("START FRAME");
+        foreach (var item in leaderboardEntities)
+        {
+            Debug.Log("LeaderboardEntityState" + item.ClientId);      
+        }
+        Debug.Log("END FRAME");
+    }
+
     public override void OnNetworkSpawn()
     {
         if(IsClient)
