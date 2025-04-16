@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using Cinemachine;
 using Unity.Collections;
 using System;
+using Unity.Cinemachine;
 
 public class TankPlayer : NetworkBehaviour
 {
     [Header("References")]
-    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CinemachineCamera virtualCamera;
     [SerializeField] private SpriteRenderer minimapIconRenderer;
     [SerializeField] private Texture2D crosshair;
     [field: SerializeField] public Health Health { get; private set; }
