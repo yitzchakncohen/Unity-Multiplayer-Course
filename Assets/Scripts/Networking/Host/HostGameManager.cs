@@ -35,7 +35,7 @@ public class HostGameManager : IDisposable
     {
         try
         {
-            allocation = await Relay.Instance.CreateAllocationAsync(MaxConnections);            
+            allocation = await RelayService.Instance.CreateAllocationAsync(MaxConnections);            
         }
         catch (Exception e)
         {
@@ -45,7 +45,7 @@ public class HostGameManager : IDisposable
 
         try
         {
-            JoinCode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            JoinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             Debug.Log($"Join Code: {JoinCode}");
         }
         catch (Exception e)
@@ -58,7 +58,7 @@ public class HostGameManager : IDisposable
 
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 
-        RelayServerData relayServerData = new RelayServerData(allocation, DTLSConnectionType);
+        RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, DTLSConnectionType);
         transport.SetRelayServerData(relayServerData);
 
         string playerName;
@@ -77,7 +77,7 @@ public class HostGameManager : IDisposable
                     )
                 }
             };
-            Lobby lobby = await Lobbies.Instance.CreateLobbyAsync($"{playerName}'s Lobby", MaxConnections, lobbyOptions);   
+            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync($"{playerName}'s Lobby", MaxConnections, lobbyOptions);   
             lobbyId = lobby.Id;
 
             HostSingleton.Instance.StartCoroutine(HeartbeatLobby(15f));
@@ -111,7 +111,7 @@ public class HostGameManager : IDisposable
         WaitForSecondsRealtime delay = new WaitForSecondsRealtime(waitTimeSeconds);
         while(true)
         {
-            Lobbies.Instance.SendHeartbeatPingAsync(lobbyId);
+            LobbyService.Instance.SendHeartbeatPingAsync(lobbyId);
             yield return delay;
         }
     }
@@ -129,7 +129,7 @@ public class HostGameManager : IDisposable
 
         try
         {
-            await Lobbies.Instance.DeleteLobbyAsync(lobbyId);
+            await LobbyService.Instance.DeleteLobbyAsync(lobbyId);
         }
         catch (LobbyServiceException e)
         {

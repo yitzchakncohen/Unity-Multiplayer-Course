@@ -121,7 +121,7 @@ public class MainMenu : MonoBehaviour
 
         try
         {
-            Lobby joiningLobby = await Lobbies.Instance.JoinLobbyByIdAsync(lobby.Id);            
+            Lobby joiningLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobby.Id);            
             string joinCode = joiningLobby.Data[JoinCode].Value;
 
             await ClientSingleton.Instance.GameManager.StartClientAsync(joinCode);

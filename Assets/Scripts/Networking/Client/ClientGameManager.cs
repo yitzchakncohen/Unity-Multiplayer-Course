@@ -58,7 +58,7 @@ public class ClientGameManager : IDisposable
     {
         try
         {
-            allocation = await Relay.Instance.JoinAllocationAsync(joinCode);
+            allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
         }
         catch (Exception e)
         {
@@ -68,7 +68,7 @@ public class ClientGameManager : IDisposable
 
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 
-        RelayServerData relayServerData = new RelayServerData(allocation, DTLSConnectionType);
+        RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, DTLSConnectionType);
         transport.SetRelayServerData(relayServerData);
 
         ConnectClient();
