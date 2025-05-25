@@ -13,7 +13,9 @@ public class ServerGameManager : IDisposable
     private int serverPort;
     private int queryPort;
     private MatchplayBackfiller backfiller;
+    #if UNITY_SERVER
     private MultiplayAllocationService multiplayAllocationService;
+    #endif
     private Dictionary<string, int> teamIdToTeamIndex = new Dictionary<string, int>();  
     public NetworkServer NetworkServer { get; private set; }
 
@@ -24,11 +26,15 @@ public class ServerGameManager : IDisposable
         this.queryPort = queryPort;
         this.playerPrefab = playerPrefab;   
         NetworkServer = new NetworkServer(manager, playerPrefab);
+    #if UNITY_SERVER
         multiplayAllocationService = new MultiplayAllocationService();
+    #endif
     }
 
     public async Task StartGameServerAsync()
     {
+#if UNITY_SERVER
+        
         await multiplayAllocationService.BeginServerCheck();
 
         try
@@ -56,9 +62,11 @@ public class ServerGameManager : IDisposable
             Debug.LogWarning("NetworkServer did not start as expected");
             return;
         }
+#endif
     }
 
 
+#if UNITY_SERVER
     private async Task<MatchmakingResults> GetMatchmakerPayload()
     {
         Task<MatchmakingResults> matchmakerPayloadTask = multiplayAllocationService.SubscribeAndAwaitMatchmakerAllocation();
@@ -120,14 +128,17 @@ public class ServerGameManager : IDisposable
         Dispose();
         Application.Quit(queryPort);
     }
+#endif
 
     public void Dispose()
     {
+#if UNITY_SERVER
         NetworkServer.OnUserJoined -= UserJoined;
         NetworkServer.OnUserLeft -= UserLeft;
 
         multiplayAllocationService?.Dispose();  
         NetworkServer?.Dispose();   
         backfiller?.Dispose();
+#endif
     }
 }
